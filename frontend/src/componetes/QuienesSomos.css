@@ -1,0 +1,8 @@
+.descripcion {
+    width: 70%;
+    height: 750px;
+    margin-left: 25%;
+    text-align: center;
+    background: url('../images/dream.png') no-repeat;
+    background-size: 100%;
+}
