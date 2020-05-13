@@ -6,7 +6,8 @@ class CarouselComentarios extends Component {
 render() {
     return(
         <>
-            <div className="carousel">Carousel comentarios</div>
+
+
         </>
     )
 }

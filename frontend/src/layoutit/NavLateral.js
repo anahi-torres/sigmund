@@ -11,38 +11,37 @@ export default () =>{
 
                 <div class="collapse navbar-collapse nav" id="navbarTogglerDemo01">
 
-                <div class="barra-lateral">
-                    <div>
-                        <img id="imagenleon" src={logo} alt="León" />
-                    </div>
+                    <div class="barra-lateral">
+                        <div>
+                            <img id="imagenleon" src={logo} alt="León" />
+                        </div>
 
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                    <nav>
-                        <ul class="lista">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                        <nav>
+                            <ul class="lista">
 
-                            <Link to="/">
-                            <li>Home</li>
-                            </Link>
+                                <Link to="/">
+                                <li>Home</li>
+                                </Link>
 
-                            <Link to="/perfil">
-                                <li>Mi perfil</li>
-                            </Link>
-                           
-                            <Link to="/consulta">
-                                <li>Agendar una consulta</li>
-                            </Link>
-
-                            <Link to="/psicologo">
-                                <li>Nuestro psicólogos</li>
-                            </Link>
+                                <Link to="/perfil">
+                                    <li>Mi perfil</li>
+                                </Link>
                             
-                            <li>Contacto</li>
-                        </ul>
-                    </nav>
-                    </div>
+                                <Link to="/consulta">
+                                    <li>Agendar una consulta</li>
+                                </Link>
 
-                    <nav id="iconos">Iconos de redes</nav>
-                </div>
+                                <Link to="/psicologo">
+                                    <li>Nuestro psicólogos</li>
+                                </Link>
+                                
+                                <li>Contacto</li>
+                            </ul>
+                        </nav>
+                        </div>
+
+                    </div>
 
                 </div>
             </nav>

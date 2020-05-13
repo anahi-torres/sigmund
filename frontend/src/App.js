@@ -56,10 +56,11 @@ function App() {
           <Route exact path="/" 
                children={
                           <>
-                            
-                            <QuienesSomos />
-                            <Pasos />
-                            <CarouselComentarios />
+                            <div className="main-container">
+                              <QuienesSomos />
+                              <Pasos />
+                              <CarouselComentarios />
+                            </div>
                           </>
                           }
         />
