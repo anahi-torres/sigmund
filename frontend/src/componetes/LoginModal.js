@@ -23,6 +23,7 @@ export default (props) =>{
         ).then( response => response.json() )
          .then( data =>{
                 if ( data.status === 'ok'){
+                    console.log(data.loggedUser)
                     props.handleLoginSuccess(data.loggedUser);
                     props.handleHide();
                 }else{

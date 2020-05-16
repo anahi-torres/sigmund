@@ -5,7 +5,7 @@ let conexion = mysql.createConnection(
         host: 'localhost',
         user: 'root',
         password: '',
-        database: "psicologia_bd"
+        database: 'psicologia_bd'
     }
  );
 
@@ -15,7 +15,7 @@ conexion.connect(
 
         if ( err ) throw err;
 
-        console.log("Conectado con exito!");
+        console.log("La bd se conectó con exito!");
     }
 );
 

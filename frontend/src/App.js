@@ -9,6 +9,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect
 } from 'react-router-dom';
 import FormConsulta from './pages/FormConsulta';
 import ListadoConsultas from './pages/ListadoConsultas';
@@ -16,7 +17,6 @@ import PerfilPsicologo from './pages/PerfilPsicologo';
 import Administracion from './pages/Administracion';
 import Pasos from './componetes/Pasos';
 import QuienesSomos from './componetes/QuienesSomos';
-
 
 function App() {
 
@@ -36,8 +36,8 @@ function App() {
     ).then( response => response.json()
     ).then(
         data => {
-            setUsuario(null);
-        }
+                    setUsuario(null);
+                }
     )
   }
 
@@ -48,35 +48,42 @@ function App() {
                      handleLoginSuccess={onLoginSuccess}
                      handleLogout={onLogout}
         />
-        <NavLateral />
+        <NavLateral user={usuario} />
         <Chat />
 
         <Switch>
-          
-          <Route exact path="/" 
-               children={
-                          <>
-                            <div className="main-container">
-                              <QuienesSomos />
-                              <Pasos />
-                              <CarouselComentarios />
-                            </div>
-                          </>
-                          }
-        />
+          <div className="main-container">
 
-          <Route path="/perfil" 
-                  children={ <PerfilPaciente /> }
+            <Route exact path="/" 
+                children={
+                            <>
+                                <QuienesSomos />
+                                <Pasos />
+                                <CarouselComentarios />
+                            </>
+                            }
             />
 
-          <Route path="/consulta"component={FormConsulta} />
+            { usuario &&
 
-          <Route path="/consultas"component={ListadoConsultas} />
+              <>
+                <Route path="/perfil" 
+                        children={ <PerfilPaciente user={usuario} /> }
+                />
+                <Route path="/consulta"component={FormConsulta} />
 
-          <Route path="/psicologo"component={PerfilPsicologo} />
+                <Route path="/consultas"component={ListadoConsultas} />
 
-          <Route path="/administracion"component={Administracion} />
+                <Route path="/psicologo"component={PerfilPsicologo} />
 
+                <Route path="/administracion"component={Administracion} />
+              </>
+
+            }
+
+            <Redirect to={ { pathname: '/' } } />
+
+          </div>
         </Switch>
 
       </Router>

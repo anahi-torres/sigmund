@@ -1,21 +1,49 @@
 import React, {useState, useEffect} from 'react';
 import './ListadoConsultas.css';
+import {Button} from 'react-bootstrap';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faEdit, faTrash} from '@fortawesome/free-solid-svg-icons';
+import ConsultaEditorModal from '../componetes/ConsultaEditorModal';
 
-export default () =>{
+export default (props) =>{
 
     const [ consultas, setConsultas ] = useState([])
+
+    const [ showConsultaEditorModal, setShowConsultaModalEditModal ] = useState(false);
+
+    const handleHideConsultaEditorModal = () =>{
+        setShowConsultaModalEditModal(false);
+    }
+
+    const onShowConsultaEditorModal = () =>{
+        setShowConsultaModalEditModal(true);
+    }
+
+    const handleConsultaSaved = ()=> {
+        setShowConsultaModalEditModal(false);
+    }
+
+    let endpoint = 'consultas';
+
+    if ( props.user && props.type === 'misconsultas'){
+        endpoint = 'consultas/user/' + props.user.id;
+    }
+
+    const cargarListadoConsultas = ()=>{
+
+        fetch(
+            `http://localhost:8888/${endpoint}`
+        ).then(
+            response => response.json()
+        ).then(
+            data => {
+                setConsultas(data)
+                console.log(data);
+            }
+        )
+   }
     
-    useEffect( ()=>{
-                    fetch('http://localhost:8888/consultas').then(
-                        response => response.json()
-                    ).then(
-                        data => {
-                            setConsultas(data)
-                            console.log(data);
-                        }
-                    )
-               }, []
-    )
+    useEffect( cargarListadoConsultas, [] );
 
     return(
         <>
@@ -30,7 +58,7 @@ export default () =>{
 
                     <div class="row my-3">
                         <div class="col">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#modal-paciente">Nuevo</button>
+                            <Button onClick={onShowConsultaEditorModal}>Nueva consulta</Button>
                         </div>
                     </div>
 
@@ -59,6 +87,12 @@ export default () =>{
                                                                         <td>{ consulta.id_paciente }</td>
                                                                         <td>{ consulta.id_psicologo }</td>
                                                                         <td>{ consulta.id_tipodeconsulta }</td>
+                                                                        <Button variant="outline-secondary" className="mr-1">
+                                                                            <FontAwesomeIcon color="green" icon={faEdit} />
+                                                                        </Button>
+                                                                        <Button variant="outline-secondary">
+                                                                            <FontAwesomeIcon color="red" icon={faTrash} />
+                                                                        </Button>
                                                                     </tr>
                                                                 )
                                                             }
@@ -72,6 +106,11 @@ export default () =>{
 
                 </div>
             </div>
+
+            <ConsultaEditorModal show={showConsultaEditorModal}
+                                 handleHide={handleHideConsultaEditorModal}
+                                 onConsultaSaved={handleConsultaSaved}
+            />
         </>
     )
 }

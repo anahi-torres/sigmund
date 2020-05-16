@@ -15,24 +15,55 @@ router.get('/', (req, res)=>{
 
 router.post("/", (req, res) => {
 
-    console.log(req.query);
+    console.log(req.body);
 
-    let consulta = `INSERT INTO consulta(fecha_consulta, semanal_consulta, id_paciente, id_psicologo, id_tipodeconsulta) 
-                    VALUES( '${req.query.fecha}', 
-                            ${req.query.semanal},
-                            ${req.query.paciente},
-                            ${req.query.psicologo},
-                            ${req.query.tipodeconsulta}
+    let sqlInsert = `INSERT INTO consulta(fecha_consulta, semanal_consulta, id_paciente, id_psicologo, id_tipodeconsulta) 
+                    VALUES( '${req.body.consultaFecha}',
+                            ${req.body.consultaSemanalOcasional},
+                            ${req.session.userId},
+                            ${req.body.consultaPsicologo},
+                            ${req.body.consultaTipoDeConsulta}
                             )`;
 
-    conexion.query(consulta,
+    conexion.query(sqlInsert,
             function(err, result, fields){
-                if ( err ) throw err;
+                if ( err ) {
 
-                //res.send("La consulta se agregó!");
-                res.json(result);
+                    res.json(
+                        {
+                            status  : 'error',
+                            message : 'Error al agregar la consulta'
+                        }
+                    );
+                }
+                else{
+
+                    res.json(
+                        {
+                            status  : 'ok',
+                            message : 'La consulta se agregó!'
+                        }
+                    );
+                }
             }
         );
 } );
+
+router.get('/user/:id', (req, res)=>{
+
+        let sql = `
+                    SELECT id_consulta, fecha_consulta, semanal_consulta, id_paciente, id_psicologo, id_tipodeconsulta
+                    FROM consulta
+                    WHERE id_paciente = ${req.params.id}
+                  `;
+
+        conexion.query(sql, function(err, result, fields){
+                if ( err ) throw err;
+
+                res.json(result);
+            }
+        )
+    }
+);
 
 module.exports = router;

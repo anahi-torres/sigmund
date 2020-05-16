@@ -3,7 +3,7 @@ import logo from '../images/logo.png';
 import './NavLateral.css';
 import {Link} from 'react-router-dom';
 
-export default () =>{
+export default (props) =>{
     return(
         <>
 
@@ -24,6 +24,8 @@ export default () =>{
                                 <li>Home</li>
                                 </Link>
 
+                                { props.user &&
+                                <>
                                 <Link to="/perfil">
                                     <li>Mi perfil</li>
                                 </Link>
@@ -31,6 +33,8 @@ export default () =>{
                                 <Link to="/consulta">
                                     <li>Agendar una consulta</li>
                                 </Link>
+                                </>
+                                }
 
                                 <Link to="/psicologo">
                                     <li>Nuestro psicólogos</li>

@@ -7,7 +7,7 @@ export default () =>{
         <>
             <Dropdown>
 
-                    <Dropdown.Toggle alignRight variant="info" className="chat redondo m-4" id="dropdown-basic">Chat</Dropdown.Toggle>
+                    <Dropdown.Toggle variant="info" className="chat redondo m-5" id="dropdown-basic">Chat</Dropdown.Toggle>
 
                     <Dropdown.Menu>
                         <Dropdown.Item>¿En qué te puedo ayudar?</Dropdown.Item>

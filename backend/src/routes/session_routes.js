@@ -1,29 +1,59 @@
 const express = require('express');
 const router = express.Router();
+const conexion = require('../connection');
 
 router.post('/', (req, res) =>{
-        if ( req.body.user === 'pablo' && req.body.password === '123456'){
-            
-            req.session.user = 'pablo'; //para que el auth le pregunte si existe
-            
-            res.json(
-                {
-                    status     : 'ok',
-                    message    : 'sesión iniciada',
-                    loggedUser : {
-                                    id     : 125,
-                                    nombre : 'Pablo Garcia'
-                                 }
+
+        let sql = `
+                    SELECT *
+                    FROM paciente
+                    WHERE nick_paciente   = ?
+                    AND password_paciente = ?
+                `;
+        
+        let values = [
+                        req.body.user,
+                        req.body.password
+                    ]
+
+        conexion.query(sql, values, (err, result, fields) =>{
+
+                if ( err ) {
+                    res.json(
+                        {
+                            status : 'error',
+                            message : 'No es posible acceder en en este momento. Intenté nuevamente en unos minutos'
+                        }
+                    )
                 }
-            )
-        }else{
-            res.json(
-                {
-                    status  : 'error',
-                    message : 'Usuario y/o contraseña invalidos'
+                else{
+                    if( result.length == 1 ){
+
+                        req.session.user   = result[0].nick_paciente;
+                        req.session.userId = result[0].id_paciente;
+            
+                        res.json(
+                            {
+                                status     : 'ok',
+                                message    : 'sesión iniciada',
+                                loggedUser : {
+                                                id     : req.session.userId,
+                                                nombre : req.session.user
+                                             }
+                            }
+                        )
+                    }
+                    else{
+                        res.json(
+                            {
+                                status  : 'error',
+                                message : 'Usuario y/o contraseña invalidos'
+                            }
+                        )
+                    }
                 }
-            )
-        }
+            }
+        )
     }
 )
 
@@ -37,7 +67,7 @@ router.delete('/', (req, res) =>{
                         }
                     )
                 }else{
-                    res.clearCookie('cloneml');
+                    res.clearCookie('sigmund');
                     res.json(
                         {
                             status  : 'ok',
