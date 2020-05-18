@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './FormConsulta.css';
 import {Form, Button} from 'react-bootstrap';
+import Swal from 'sweetalert2';
 
 export default (props) =>{
 
@@ -18,17 +19,14 @@ export default (props) =>{
 
     const handleConsultaSemanalOcasional = (event) =>{
         setConsultaSemanalOcasional( event.target.value );
-        console.log( event.target.value );
     }
 
     const handleConsultaPsicologo = (event) =>{
         setConsultaPsicologo( event.target.value );
-        console.log( event.target.value );
     }
 
     const handleConsultaTipoDeConsulta = (event) =>{
         setConsultaTipoDeConsulta( event.target.value );
-        console.log( event.target.value );
     }
 
     const handleSave = () =>{
@@ -40,9 +38,16 @@ export default (props) =>{
         formData.append('consultaPsicologo', consultaPsicologo);
         formData.append('consultaTipoDeConsulta', consultaTipoDeConsulta);
 
+        let url = 'http://localhost:8888/consultas';
+        let method = 'POST';
 
-        fetch('http://localhost:8888/consultas',{
-            method : 'POST',
+        if ( props.idConsulta) {
+            url += '/' + props.idConsulta;
+            method = 'PUT';
+        }
+
+        fetch( url, {
+            method : method,
             body : formData,
             credentials : 'include'
         }
@@ -50,11 +55,15 @@ export default (props) =>{
          .then( data => {
              
                 if ( data.status === 'ok'){
-                    alert(data.message);
                     props.onConsultaSaved(data.message);
                 }
                 else{
-                    alert(data.message);
+                    Swal.fire(
+                        {
+                           text: data.message,
+                           icon: 'error' 
+                        }
+                    )
                 }
             }
         ).catch( error =>{
@@ -64,19 +73,35 @@ export default (props) =>{
 
     }
 
+    useEffect( () =>{
+            if (props.idConsulta){
+                fetch(`http://localhost:8888/consultas/` + props.idConsulta)
+                .then(
+                    response => response.json()
+                ).then(
+                    data =>{
+                        setConsultaFecha( props.formateoFecha(data.fecha) )
+                        setConsultaSemanalOcasional(data.semanalOcasional)
+                        setConsultaPsicologo(data.psicologo)
+                        setConsultaTipoDeConsulta(data.tipo)
+                    }
+                )
+            }
+            
+        } , [props.idConsulta]
+    )
+
     return(
         <>
             <div className="formulario">
                 <Form className="m-5">
 
-                    <h1>Agendar una consulta</h1>
-
                     <Form.Group>
                         <Form.Label for="fecha">Fecha y hora</Form.Label> 
                         <Form.Control required="required"
-                               type="datetime-local"
-                               value={consultaFecha}
-                               onChange={handleConsultaFechaChange}
+                                      type="datetime-local"
+                                      value={consultaFecha}
+                                      onChange={handleConsultaFechaChange}
                         />
                     </Form.Group>
 
@@ -125,7 +150,7 @@ export default (props) =>{
 
                     <Button onClick={ handleSave } 
                             variant="primary" 
-                            type="submit"
+                            
                     >
                         Agendar consulta
                     </Button>

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {Button, Modal, Form} from 'react-bootstrap';
+import {Button, Form} from 'react-bootstrap';
+import Modal from './Modal';
 
 export default (props) =>{
 
@@ -46,44 +47,47 @@ export default (props) =>{
 
     return(
         <>
-            <Modal show={props.show} onHide={props.handleHide}>
+            <Modal show={props.show} 
+                   handleHide={props.handleHide}
+                   title="Iniciar sesión"
+                   body={
+                          <>
+                            <Form.Group>
+                                <Form.Label>Nombre de usuario</Form.Label>
 
-                <Modal.Header closeButton>
-                    <Modal.Title>Iniciar sesión</Modal.Title>
-                </Modal.Header>
+                                <Form.Control type="text" 
+                                            value={nombreUsuario}
+                                            onChange={handleUserNameChange}
+                                />
+                            </Form.Group>
 
-                <Modal.Body>
-                    
-                    <Form.Group>
-                        <Form.Label>Nombre de usuario</Form.Label>
+                            <Form.Group>
+                                <Form.Label>Contraseña</Form.Label>
 
-                        <Form.Control type="text" 
-                                      value={nombreUsuario}
-                                      onChange={handleUserNameChange}
-                        />
-                    </Form.Group>
+                                <Form.Control type="password"
+                                            value={password}
+                                            onChange={handlePasswordChange} 
+                                />
+                            </Form.Group>
+                          </>
+                        }  
+                   footer={
+                            <>
+                                <Button variant="secondary" 
+                                        onClick={props.handleHide}
+                                >
+                                    Cancelar
+                                </Button>
 
-                    <Form.Group>
-                        <Form.Label>Contraseña</Form.Label>
+                                <Button variant="primary"
+                                        onClick={handleLoginClick}
+                                >
+                                    Iniciar sesión
+                                </Button>
+                            </>
 
-                        <Form.Control type="password"
-                                      value={password}
-                                      onChange={handlePasswordChange} 
-                        />
-                    </Form.Group>
-
-                </Modal.Body>
-
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={props.handleHide}>Close</Button>
-                    <Button variant="primary"
-                            onClick={handleLoginClick}
-                    >
-                        Iniciar sesión
-                    </Button>
-                </Modal.Footer>
-
-            </Modal>
+                          }
+            />
         </>
     )
 }

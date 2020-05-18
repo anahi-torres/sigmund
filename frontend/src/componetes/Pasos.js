@@ -1,60 +1,46 @@
 import React from 'react';
 import './Pasos.css';
 import logo from '../images/pasos.png';
-import {Accordion, Card, Row, Col, Button, Container} from 'react-bootstrap';
+import {Row, Col, Button, Container} from 'react-bootstrap';
 
-export default () =>{
+export default (props) =>{
     return(
         <>
 
 
-            <div className="somdra mb-2 fondo-pasos">
+            <div className="somdra">
         
                 <Container className="mt-4">
-                <Row className="d-flex justify-content-center align-items-center m-3">
-                <Col xs={10} md={6} xl={6} className="">
+                    <Row className="d-flex justify-content-center">
 
-                    <img src={logo} className="img-fluid" alt="imagen de home" />
-                    </Col>
+                        <Col xs={12} md={6} xl={6} className="fondo-pasos align-items-center">
+                            <img src={logo} className="img-fluid" alt="imagen de home" />
+                        </Col>
 
-                    <Col xs={10} md={6} xl={6} className="text-right text-md-right">
+                        <Col xs={10} md={6} xl={6} className="text-left text-md-left align-items-center">
 
-                        <h1>Pasos a seguir</h1>
-                        <p>Empieza ya tu sesión con uno de los ​psicólogos online de Psonríe​ y además de sentirte mejor, ahorrarás tiempo y dinero. 
-                            Solo tienes que seguir estos sencillos pasos:</p>
+                            <h1 className='font-weight-bolder display-3 mobile'>
+                                Empieza ya tu sesión
+                            </h1>
+                            <p className="h5">
+                                Aquí te cuento como funciona Sigmund,  
+                                solo tienes que seguir estos sencillos pasos:
+                            </p>
 
-                        <Accordion defaultActiveKey="0" className="pasos">
-                            <Card className="mb-3 somdra">
-                                <Accordion.Toggle as={Card.Header} eventKey="0">
-                                    Paso 1
-                                </Accordion.Toggle>
-                                <Accordion.Collapse eventKey="0">
-                                <Card.Body>Crea tu perfil y rellena tus datos</Card.Body>
-                                </Accordion.Collapse>
-                            </Card>
-                            <Card className="mb-3 somdra">
-                                <Accordion.Toggle as={Card.Header} eventKey="1">
-                                    Paso 2
-                                </Accordion.Toggle>
-                                <Accordion.Collapse eventKey="1">
-                                <Card.Body>Primero tendremos una conversación contigo, para poder entender bien tu situación y ver cuál es la mejor manera de ayudarte.</Card.Body>
-                                </Accordion.Collapse>
-                            </Card>
-                            <Card className="mb-3 somdra">
-                                <Accordion.Toggle  as={Card.Header} eventKey="2">
-                                    Paso 3
-                                </Accordion.Toggle>
-                                <Accordion.Collapse eventKey="2">
-                                <Card.Body>Elige el plan que mejor se adapte a tus necesidades. Dispones de sesiones desde 24€.</Card.Body>
-                                </Accordion.Collapse>
-                            </Card>
-                        </Accordion>  
+                            <p className="m-2">
+                                <ol>
+                                    <li> Crea tu perfil y rellena tus datos.</li>
+                                    <li> Primero tendremos una conversación contigo, para poder ver cuál es la mejor manera de ayudarte.</li>
+                                    <li> Seleccioná tu psicólogo.</li>
+                                    <li> Disfruta de tus sesiones por videollamada.</li>
+                                </ol>
+                            </p>
 
-                        <Button variant="info mb-3">Learn more</Button>
+                            <Button variant="outline-info mb-3" onClick={props.showRegistro}>Registrate</Button>
 
-                    </Col>
+                        </Col>
 
-                </Row>
+                    </Row>
                 </Container>
 
             </div>

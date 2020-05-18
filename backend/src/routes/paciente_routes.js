@@ -24,25 +24,4 @@ router.get("/:id", (req, res) => {
         );
 } );
 
-
-router.post("/", (req, res) => {
-
-    console.log(req.query);
-
-    let consulta = `INSERT INTO paciente(nombre_paciente, dni_paciente, motivoconsulta_pac) 
-                    VALUES( "${req.query.nombre}", 
-                            ${req.query.dni}, 
-                            "${req.query.motivoconsulta}"
-                            )`;
-
-    conexion.query(consulta,
-            function(err, result, fields){
-                if ( err ) throw err;
-
-                res.send("El paciente se agregó!");
-                //res.json(result);
-            }
-        );
-} );
-
 module.exports = router;

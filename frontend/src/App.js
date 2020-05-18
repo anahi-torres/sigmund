@@ -17,6 +17,11 @@ import PerfilPsicologo from './pages/PerfilPsicologo';
 import Administracion from './pages/Administracion';
 import Pasos from './componetes/Pasos';
 import QuienesSomos from './componetes/QuienesSomos';
+import Planes from './componetes/Planes';
+import NuestrosPsicologos from './componetes/NuestrosPsicologos';
+import RegistroModal from './componetes/RegistroModal';
+import DetallePsicologos from './pages/DetallePsicologos';
+import NavInferior from './layoutit/NavInferior';
 
 function App() {
 
@@ -41,6 +46,16 @@ function App() {
     )
   }
 
+  const [ showRegistroModal, setShowRegistroModal ] = useState(false);
+
+  const handleShowRegistroModal = () =>{
+    setShowRegistroModal(true);
+  }
+
+  const handleHideRegistroModal = () =>{
+    setShowRegistroModal(false);
+  }
+
   return (
     <>
       <Router>
@@ -54,11 +69,15 @@ function App() {
         <Switch>
           <div className="main-container">
 
+            <Route path="/nuestrospsicologos" component={DetallePsicologos} />
+
             <Route exact path="/" 
                 children={
                             <>
-                                <QuienesSomos />
-                                <Pasos />
+                                <QuienesSomos showRegistro={handleShowRegistroModal} />
+                                <Pasos showRegistro={handleShowRegistroModal} />
+                                <Planes showRegistro={handleShowRegistroModal} />
+                                <NuestrosPsicologos />
                                 <CarouselComentarios />
                             </>
                             }
@@ -87,6 +106,10 @@ function App() {
         </Switch>
 
       </Router>
+
+      <RegistroModal show={showRegistroModal} 
+                     handleHide={handleHideRegistroModal}
+        />
     </>
   );
 }

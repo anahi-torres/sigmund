@@ -3,7 +3,9 @@ import './ListadoConsultas.css';
 import {Button} from 'react-bootstrap';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faEdit, faTrash} from '@fortawesome/free-solid-svg-icons';
-import ConsultaEditorModal from '../componetes/ConsultaEditorModal';
+import Swal from 'sweetalert2';
+import Modal from '../componetes/Modal';
+import FormConsulta from './FormConsulta';
 
 export default (props) =>{
 
@@ -11,16 +13,76 @@ export default (props) =>{
 
     const [ showConsultaEditorModal, setShowConsultaModalEditModal ] = useState(false);
 
+    const [ selectedConsulta, setSelectedConsulta ] = useState(null);
+
+    const formateoFecha = (fecha) =>{
+        return fecha.replace(":00.000Z", '')
+    }
+
     const handleHideConsultaEditorModal = () =>{
+        setSelectedConsulta(null);
         setShowConsultaModalEditModal(false);
     }
 
     const onShowConsultaEditorModal = () =>{
+        setSelectedConsulta (null);
         setShowConsultaModalEditModal(true);
     }
 
-    const handleConsultaSaved = ()=> {
+    const handleEditClick = (id_consulta) =>{
+        setSelectedConsulta(id_consulta)
+        setShowConsultaModalEditModal(true)
+    }
+
+    const handleDeleteClick = (idConsulta) =>{
+        Swal.fire({
+            title : '¿Confirma que desea eliminar la publicación?',
+            icon : 'question',
+            showCancelButton : true,
+            confirmButtonText : 'Aceptar',
+            cancelButtonText : 'Cancelar'
+        }).then( result =>{
+            if ( result.value ){
+
+                fetch(`http://localhost:8888/consultas/${idConsulta}`,
+                    {
+                        method      : 'DELETE',
+                        credentials : 'include'
+                    }
+                ).then(
+                    response => response.json()
+                ).then(
+                    data =>{
+                        if ( data.status === 'ok' ){
+                            Swal.fire({
+                                text : data.message,
+                                icon : 'success'
+                            })
+
+                            cargarListadoConsultas();
+                        }
+                        else{
+                            Swal.fire({
+                                text : data.message,
+                                icon : 'error'
+                            })
+                        }
+                    }
+                )
+            }
+        })
+    }
+
+    const handleConsultaSaved = (message)=> {
         setShowConsultaModalEditModal(false);
+        cargarListadoConsultas();
+
+        Swal.fire(
+            {
+               text: message,
+               icon: 'success' 
+            }
+        )
     }
 
     let endpoint = 'consultas';
@@ -38,7 +100,6 @@ export default (props) =>{
         ).then(
             data => {
                 setConsultas(data)
-                console.log(data);
             }
         )
    }
@@ -78,25 +139,31 @@ export default (props) =>{
                                 </thead>
 
                                 <tbody id="listado-paciente">{ 
-                                                        consultas.map( consulta =>{
-                                                                return(
-                                                                    <tr>
-                                                                        <td>{ consulta.id_consulta }</td>
-                                                                        <td>{ consulta.fecha_consulta }</td>
-                                                                        <td>{ consulta.semanal_consulta }</td>
-                                                                        <td>{ consulta.id_paciente }</td>
-                                                                        <td>{ consulta.id_psicologo }</td>
-                                                                        <td>{ consulta.id_tipodeconsulta }</td>
-                                                                        <Button variant="outline-secondary" className="mr-1">
-                                                                            <FontAwesomeIcon color="green" icon={faEdit} />
-                                                                        </Button>
-                                                                        <Button variant="outline-secondary">
-                                                                            <FontAwesomeIcon color="red" icon={faTrash} />
-                                                                        </Button>
-                                                                    </tr>
-                                                                )
-                                                            }
-                                                        ) 
+                                                                consultas.map( consulta =>{
+                                                                        return(
+                                                                            <tr>
+                                                                                <td>{ consulta.id_consulta }</td>
+                                                                                <td>{ formateoFecha(consulta.fecha_consulta) }</td>
+                                                                                <td>{ consulta.semanal_consulta }</td>
+                                                                                <td>{ consulta.id_paciente }</td>
+                                                                                <td>{ consulta.id_psicologo }</td>
+                                                                                <td>{ consulta.id_tipodeconsulta }</td>
+
+                                                                                <Button className="mr-1"
+                                                                                        variant="outline-secondary"
+                                                                                        onClick={ () =>{ handleEditClick(consulta.id_consulta) } }
+                                                                                >
+                                                                                    <FontAwesomeIcon color="green" icon={faEdit} />
+                                                                                </Button>
+
+                                                                                <Button variant="outline-secondary"
+                                                                                        onClick={ () =>{ handleDeleteClick(consulta.id_consulta) } }>
+                                                                                    <FontAwesomeIcon color="red" icon={faTrash} />
+                                                                                </Button>
+                                                                            </tr>
+                                                                        )
+                                                                    }
+                                                                ) 
                                                             }
                                 </tbody>
 
@@ -107,9 +174,16 @@ export default (props) =>{
                 </div>
             </div>
 
-            <ConsultaEditorModal show={showConsultaEditorModal}
-                                 handleHide={handleHideConsultaEditorModal}
-                                 onConsultaSaved={handleConsultaSaved}
+            
+
+            <Modal show={showConsultaEditorModal}
+                   handleHide={handleHideConsultaEditorModal}
+                   title="Agendar una consulta"
+                   body={ <FormConsulta onConsultaSaved={ handleConsultaSaved }
+                                        idConsulta={ selectedConsulta }
+                                        formateoFecha={formateoFecha}
+                          /> 
+                        }
             />
         </>
     )

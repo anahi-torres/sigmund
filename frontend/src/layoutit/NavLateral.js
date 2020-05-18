@@ -1,9 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from '../images/logo.png';
 import './NavLateral.css';
 import {Link} from 'react-router-dom';
+import RegistroModal from '../componetes/RegistroModal';
 
 export default (props) =>{
+
+    const [ showRegistroModal, setShowRegistroModal ] = useState(false);
+
+    const handleShowRegistroModal = () =>{
+        setShowRegistroModal(true);
+    }
+
+    const handleHideRegistroModal = () =>{
+        setShowRegistroModal(false);
+    }
+
     return(
         <>
 
@@ -20,25 +32,34 @@ export default (props) =>{
                         <nav>
                             <ul class="lista">
 
-                                <Link to="/">
+                                <a href="#quienes-somos">
                                 <li>Home</li>
-                                </Link>
+                                </a>
 
-                                { props.user &&
-                                <>
-                                <Link to="/perfil">
-                                    <li>Mi perfil</li>
-                                </Link>
-                            
-                                <Link to="/consulta">
-                                    <li>Agendar una consulta</li>
-                                </Link>
-                                </>
+                                { props.user
+                                ?
+                                  <>
+                                    <Link to="/perfil">
+                                        <li>Mi perfil</li>
+                                    </Link>
+                                
+                                    <Link to="/consulta">
+                                        <li>Agendar una consulta</li>
+                                    </Link>
+                                  </>
+                                :
+                                  <>
+                                        <li onClick={handleShowRegistroModal}>Comienza ahora</li>
+
+                                    <a href="#nuestros-planes">
+                                        <li>Nuestro planes</li>
+                                    </a>
+                                  </>
                                 }
 
-                                <Link to="/psicologo">
+                                <a href="#nuestros-psicologos">
                                     <li>Nuestro psicólogos</li>
-                                </Link>
+                                </a>
                                 
                                 <li>Contacto</li>
                             </ul>
@@ -49,6 +70,10 @@ export default (props) =>{
 
                 </div>
             </nav>
+
+            <RegistroModal show={showRegistroModal} 
+                           handleHide={handleHideRegistroModal}
+            />
         </>
     )
 }

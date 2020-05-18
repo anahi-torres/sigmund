@@ -14,7 +14,7 @@ router.post('/', (req, res) =>{
         let values = [
                         req.body.user,
                         req.body.password
-                    ]
+                     ]
 
         conexion.query(sql, values, (err, result, fields) =>{
 
@@ -79,5 +79,38 @@ router.delete('/', (req, res) =>{
         )
     }
 )
+
+router.post("/registro", (req, res) => {
+
+    console.log(req.query);
+
+    let consulta = `INSERT INTO paciente(nick_paciente, nombre_paciente, password_paciente, dni_paciente) 
+                    VALUES( 
+                            "${req.body.user}", 
+                            "${req.body.nombre}",
+                            "${req.body.password}",
+                            ${req.body.dni}
+                          )`;
+
+    conexion.query(consulta,
+            function(err, result, fields){
+                if ( err ){
+                    res.json(
+                        {
+                            status  : 'error',
+                            message : 'Error al registrarse'
+                        }
+                    )
+                }else{
+                    res.json(
+                        {
+                            status  : 'ok',
+                            message : 'Usuario registrado con exito!'
+                        }
+                    )
+                }
+            }
+        );
+} );
 
 module.exports = router;

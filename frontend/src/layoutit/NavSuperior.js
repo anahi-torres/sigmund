@@ -5,10 +5,13 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Button from "react-bootstrap/Button";
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import LoginModal from '../componetes/LoginModal';
+import RegistroModal from '../componetes/RegistroModal';
 
 export default (props) =>{
 
     const [showLoginModal, setShowLoginModal] = useState(false);
+
+    const [ showRegistroModal, setShowRegistroModal ] = useState(false);
 
     const handleShowLoginModal = () =>{
         setShowLoginModal(true);
@@ -16,6 +19,14 @@ export default (props) =>{
 
     const handleHideLoginModal = () =>{
         setShowLoginModal(false);
+    }
+
+    const handleShowRegistroModal = () =>{
+        setShowRegistroModal(true);
+    }
+
+    const handleHideRegistroModal = () =>{
+        setShowRegistroModal(false);
     }
 
     return (
@@ -31,7 +42,7 @@ export default (props) =>{
                 { !props.user
                   ?
                     <>
-                    <Button  variant="info" className="mr-1" onClick={handleShowLoginModal}>Registrarse</Button>
+                    <Button  variant="info" className="mr-1" onClick={handleShowRegistroModal}>Registrarse</Button>
                     <Button variant="outline-info" onClick={handleShowLoginModal}>Iniciar sesión</Button>
                     </>
                   :
@@ -52,9 +63,15 @@ export default (props) =>{
             </Navbar.Collapse>
         </Navbar>
 
+
+        
         <LoginModal show={showLoginModal} 
                     handleHide={handleHideLoginModal}
                     handleLoginSuccess={props.handleLoginSuccess}
+        />
+        
+        <RegistroModal show={showRegistroModal} 
+                       handleHide={handleHideRegistroModal}
         />
     </>
     );
