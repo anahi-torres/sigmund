@@ -22,7 +22,7 @@ export default () =>{
                 <Row className="no-gutters">
 
                     <Col>
-                        <img src={psicologo1}  className="img-fluid" className="card-img" alt="..." />
+                        <img src={psicologo1}  className="img-fluid card-img" alt="..." />
                     </Col>
 
                     <Col>
@@ -50,7 +50,7 @@ export default () =>{
                 <Row className="no-gutters">
 
                     <Col>
-                        <img src={psicologo2}  className="img-fluid" className="card-img" alt="..." />
+                        <img src={psicologo2}  className="img-fluid card-img" alt="..." />
                     </Col>
 
                     <Col>
@@ -78,7 +78,7 @@ export default () =>{
                 <Row className="no-gutters">
 
                     <Col>
-                        <img src={psicologo3}  className="img-fluid" className="card-img" alt="..." />
+                        <img src={psicologo3}  className="img-fluid card-img" alt="..." />
                     </Col>
 
                     <Col>
@@ -105,7 +105,7 @@ export default () =>{
                 <Row className="no-gutters">
 
                     <Col>
-                        <img src={psicologo4}  className="img-fluid" className="card-img" alt="..." />
+                        <img src={psicologo4}  className="img-fluid card-img" alt="..." />
                     </Col>
 
                     <Col>

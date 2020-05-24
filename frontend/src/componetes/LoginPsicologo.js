@@ -5,65 +5,70 @@ import Swal from 'sweetalert2';
 
 export default (props) =>{
 
-    const handleLoginClick = ()=>{
-        
-        let url = 'http://localhost:8888/auth';
+    const handleLoginPsicologoClick = () =>{
+
+        let url = 'http://localhost:8888/psicologos';
 
         let params = {
-                        user : nombreUsuario,
-                        password : password
-                     }
+                        psicologo : nombrePsicologo,
+                        password  : passwordPsicologo 
+                    }
 
         fetch(url, {
-                       method : 'POST',
-                       credentials : 'include',
-                       body : JSON.stringify( params ),
-                       headers: {
+                        method : 'POST',
+                        credentials : 'include',
+                        body : JSON.stringify( params ),
+                        headers: {
                                     'Content-Type' : 'application/json'
                                 }
-                   }
+                }
         ).then( response => response.json() )
-         .then( data =>{
+        .then( data =>{
                 if ( data.status === 'ok'){
-                    console.log(data.loggedUser)
                     props.handleLoginSuccess(data.loggedUser);
                     props.handleHide();
                 }else{
                     Swal.fire(
                         {
-                           text: data.message,
-                           icon: 'error' 
+                        text: data.message,
+                        icon: 'error' 
                         }
                     )
                 }
             }
-         )
+        )
     }
 
-    const [nombreUsuario, setNombreUsuario] = useState('');
-    const [password, setPassword] = useState('');
+    const [ nombrePsicologo, setNombrePsicologo] = useState('');
+    const [ passwordPsicologo, setPasswordPsicologo] = useState('');
 
-    const handleUserNameChange = (event) =>{
-        setNombreUsuario( event.target.value );
+    const handleNombrePsicologoChange = (event) => {
+        setNombrePsicologo( event.target.value );
     }
 
-    const handlePasswordChange = (event) =>{
-        setPassword( event.target.value );
+    const handlePasswordPsicologoChange = (event) => {
+        setPasswordPsicologo( event.target.value );
     }
 
+    const handleOnClick = () =>{
+        props.showRegistro()
+        props.handleHide()
+    }
+
+ 
     return(
         <>
             <Modal show={props.show} 
                    handleHide={props.handleHide}
-                   title="Iniciar sesión"
+                   title= 'Iniciar sesión como psicólogo'
                    body={
                           <>
                             <Form.Group>
                                 <Form.Label>Nombre de usuario</Form.Label>
 
-                                <Form.Control type="text" 
-                                            value={nombreUsuario}
-                                            onChange={handleUserNameChange}
+                                <Form.Control type="text"
+                                              value={nombrePsicologo} 
+                                              onChange={handleNombrePsicologoChange}
                                 />
                             </Form.Group>
 
@@ -71,10 +76,16 @@ export default (props) =>{
                                 <Form.Label>Contraseña</Form.Label>
 
                                 <Form.Control type="password"
-                                            value={password}
-                                            onChange={handlePasswordChange} 
+                                              value={passwordPsicologo}
+                                              onChange={handlePasswordPsicologoChange}
                                 />
                             </Form.Group>
+
+                            <Button variant="link" onClick={handleOnClick}                      
+                            > 
+                                ¿No tenes cuenta? Registrate
+                            </Button>
+
                           </>
                         }  
                    footer={
@@ -86,7 +97,7 @@ export default (props) =>{
                                 </Button>
 
                                 <Button variant="primary"
-                                        onClick={handleLoginClick}
+                                        onClick={handleLoginPsicologoClick}
                                 >
                                     Iniciar sesión
                                 </Button>

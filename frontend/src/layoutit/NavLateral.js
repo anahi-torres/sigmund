@@ -36,7 +36,7 @@ export default (props) =>{
                                 <li>Home</li>
                                 </a>
 
-                                { props.user
+                                { props.user && props.user.type === 'paciente'
                                 ?
                                   <>
                                     <Link to="/perfil">
@@ -47,7 +47,7 @@ export default (props) =>{
                                         <li>Agendar una consulta</li>
                                     </Link>
                                   </>
-                                :
+                                : 
                                   <>
                                         <li onClick={handleShowRegistroModal}>Comienza ahora</li>
 

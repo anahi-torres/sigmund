@@ -6,40 +6,39 @@ router.post('/', (req, res) =>{
 
         let sql = `
                     SELECT *
-                    FROM paciente
-                    WHERE nick_paciente   = ?
-                    AND password_paciente = ?
-                `;
-        
+                      FROM psicologo
+                     WHERE nombre_psicologo = ?
+                       AND password_psicologo = ?
+                  `;
+
         let values = [
-                        req.body.user,
+                        req.body.psicologo,
                         req.body.password
                      ]
 
         conexion.query(sql, values, (err, result, fields) =>{
-
-                if ( err ) {
+                if ( err ){
                     res.json(
                         {
                             status : 'error',
-                            message : 'No es posible acceder en en este momento. Intenté nuevamente en unos minutos'
+                            message : 'No es posible acceder en este momento. Intente nuevamente en unos minutos.'
                         }
                     )
                 }
                 else{
-                    if( result.length == 1 ){
 
-                        req.session.user   = result[0].nick_paciente;
-                        req.session.userId = result[0].id_paciente;
-            
+                    if( result.length == 1 ){
+                        req.session.user   = result[0].nombre_psicologo;
+                        req.session.userId = result[0].id_psicologo;
+
                         res.json(
                             {
                                 status     : 'ok',
-                                message    : 'sesión iniciada',
+                                message    : 'Sesión iniciada',
                                 loggedUser : {
                                                 id     : req.session.userId,
                                                 nombre : req.session.user,
-                                                type : 'paciente'
+                                                type : 'psicologo'
                                              }
                             }
                         )
@@ -47,34 +46,11 @@ router.post('/', (req, res) =>{
                     else{
                         res.json(
                             {
-                                status  : 'error',
-                                message : 'Usuario y/o contraseña invalidos'
+                                status : 'error',
+                                message : 'Usuario y/o contraseña no validos'
                             }
                         )
                     }
-                }
-            }
-        )
-    }
-)
-
-router.delete('/', (req, res) =>{
-        req.session.destroy( err =>{
-                if ( err ){
-                    res.json(
-                        {
-                            status  : 'error',
-                            message : 'Error al cerrar la sesión'
-                        }
-                    )
-                }else{
-                    res.clearCookie('sigmund');
-                    res.json(
-                        {
-                            status  : 'ok',
-                            message : 'Sesión cerrada'
-                        }
-                    )
                 }
             }
         )
@@ -85,12 +61,12 @@ router.post("/registro", (req, res) => {
 
     console.log(req.query);
 
-    let consulta = `INSERT INTO paciente(nick_paciente, nombre_paciente, password_paciente, dni_paciente) 
+    let consulta = `INSERT INTO psicologo(nombre_psicologo, password_psicologo, matricula_psicologo, id_tarifa) 
                     VALUES( 
-                            "${req.body.user}", 
-                            "${req.body.nombre}",
+                            "${req.body.nombre}", 
                             "${req.body.password}",
-                            ${req.body.dni}
+                            "${req.body.matricula}",
+                            "${req.body.tarifa}"
                           )`;
 
     conexion.query(consulta,
@@ -113,5 +89,6 @@ router.post("/registro", (req, res) => {
             }
         );
 } );
+
 
 module.exports = router;

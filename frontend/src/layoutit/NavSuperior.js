@@ -6,12 +6,18 @@ import Button from "react-bootstrap/Button";
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import LoginModal from '../componetes/LoginModal';
 import RegistroModal from '../componetes/RegistroModal';
+import LoginPsicologo from '../componetes/LoginPsicologo';
+import RegistroPsicologo from '../componetes/RegistroPsicologo';
 
 export default (props) =>{
 
     const [showLoginModal, setShowLoginModal] = useState(false);
 
     const [ showRegistroModal, setShowRegistroModal ] = useState(false);
+
+    const [ showPsicologoModal, setShowPsicologoModal ] = useState(false);
+
+    const [ showRegistroPsicologoModal, setShowRegistroPsicologoModal ] = useState(false);
 
     const handleShowLoginModal = () =>{
         setShowLoginModal(true);
@@ -29,6 +35,22 @@ export default (props) =>{
         setShowRegistroModal(false);
     }
 
+    const handleShowPsicologoModal = () =>{
+        setShowPsicologoModal(true);
+    }
+
+    const handleHidePsicologoModal = () =>{
+        setShowPsicologoModal(false);
+    }
+
+    const handleShowRegistroPsicologoModal = () =>{
+        setShowRegistroPsicologoModal(true);
+    }
+
+    const handleHidePsicologoRegistroModal = () =>{
+        setShowRegistroPsicologoModal(false);
+    }
+
     return (
     <>
 
@@ -42,6 +64,7 @@ export default (props) =>{
                 { !props.user
                   ?
                     <>
+                    <Button variant="link" onClick={handleShowPsicologoModal}>Iniciar sesión como psicólogo</Button>
                     <Button  variant="info" className="mr-1" onClick={handleShowRegistroModal}>Registrarse</Button>
                     <Button variant="outline-info" onClick={handleShowLoginModal}>Iniciar sesión</Button>
                     </>
@@ -72,6 +95,17 @@ export default (props) =>{
         
         <RegistroModal show={showRegistroModal} 
                        handleHide={handleHideRegistroModal}
+        />
+
+        <LoginPsicologo show={showPsicologoModal}
+                        handleHide={handleHidePsicologoModal}
+                        showRegistro={handleShowRegistroPsicologoModal}
+                        handleLoginSuccess={props.handleLoginSuccess}
+        />
+
+        <RegistroPsicologo show={showRegistroPsicologoModal}
+                           handleHide={handleHidePsicologoRegistroModal}
+                           showLogin={handleShowPsicologoModal}
         />
     </>
     );

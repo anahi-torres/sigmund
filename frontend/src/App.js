@@ -71,6 +71,8 @@ function App() {
 
             <Route path="/nuestrospsicologos" component={DetallePsicologos} />
 
+            <Route path="/psicologo"component={PerfilPsicologo} />
+
             <Route exact path="/" 
                 children={
                             <>
@@ -92,8 +94,6 @@ function App() {
                 <Route path="/consulta"component={FormConsulta} />
 
                 <Route path="/consultas"component={ListadoConsultas} />
-
-                <Route path="/psicologo"component={PerfilPsicologo} />
 
                 <Route path="/administracion"component={Administracion} />
               </>
