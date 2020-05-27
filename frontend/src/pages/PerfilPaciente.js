@@ -1,6 +1,7 @@
 import React from 'react';
 import './PerfilPaciente.css';
 import ListadoConsultas from './ListadoConsultas';
+import Calendario from '../componetes/Calendario';
 
 export default (props) =>{
     return(
@@ -12,6 +13,8 @@ export default (props) =>{
                 <ListadoConsultas type="misconsultas"
                                   user={ props.user }
                 />
+
+                <Calendario type='paciente' user={props.user}/>
                 
             </div>
         </>

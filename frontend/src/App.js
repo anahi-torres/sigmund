@@ -21,7 +21,6 @@ import Planes from './componetes/Planes';
 import NuestrosPsicologos from './componetes/NuestrosPsicologos';
 import RegistroModal from './componetes/RegistroModal';
 import DetallePsicologos from './pages/DetallePsicologos';
-import NavInferior from './layoutit/NavInferior';
 
 function App() {
 
@@ -71,7 +70,7 @@ function App() {
 
             <Route path="/nuestrospsicologos" component={DetallePsicologos} />
 
-            <Route path="/psicologo"component={PerfilPsicologo} />
+            <Route path="/psicologo" children={<PerfilPsicologo user={usuario} />} />
 
             <Route exact path="/" 
                 children={

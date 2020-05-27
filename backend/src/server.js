@@ -6,7 +6,8 @@ const fileUpload = require('express-fileupload');
 const sessionRoutes = require('./routes/session_routes');
 const pacienteRoutes = require('./routes/paciente_routes');
 const consultasRoutes = require('./routes/consultas_routes');
-const sessionPsicoRoutes = require('./routes/sessionPsico_routes.js')
+const sessionPsicoRoutes = require('./routes/sessionPsico_routes');
+const calendarioRoutes = require('./routes/consultasCalendario_routes');
 
 
 const app = express();
@@ -39,5 +40,6 @@ app.use('/auth', sessionRoutes);
 app.use('/paciente', pacienteRoutes);
 app.use('/consultas', consultasRoutes);
 app.use('/psicologos', sessionPsicoRoutes);
+app.use('/calendario', calendarioRoutes);
 
 app.listen(8888, ()=>{ console.log('Escuchando desde el server...')} );

@@ -32,9 +32,9 @@ export default (props) =>{
                         <nav>
                             <ul class="lista">
 
-                                <a href="#quienes-somos">
-                                <li>Home</li>
-                                </a>
+                                <Link to="/">
+                                    <li>Home</li>
+                                </Link>
 
                                 { props.user && props.user.type === 'paciente'
                                 ?
@@ -49,7 +49,7 @@ export default (props) =>{
                                   </>
                                 : 
                                   <>
-                                        <li onClick={handleShowRegistroModal}>Comienza ahora</li>
+                                    <li onClick={handleShowRegistroModal}>Comienza ahora</li>
 
                                     <a href="#nuestros-planes">
                                         <li>Nuestro planes</li>

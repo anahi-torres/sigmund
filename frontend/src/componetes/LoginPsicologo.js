@@ -2,8 +2,11 @@ import React, {useState} from 'react';
 import {Button, Form} from 'react-bootstrap';
 import Modal from './Modal';
 import Swal from 'sweetalert2';
+import {useHistory} from 'react-router-dom';
 
 export default (props) =>{
+
+    const history = useHistory(); 
 
     const handleLoginPsicologoClick = () =>{
 
@@ -27,6 +30,7 @@ export default (props) =>{
                 if ( data.status === 'ok'){
                     props.handleLoginSuccess(data.loggedUser);
                     props.handleHide();
+                    history.push('/psicologo')
                 }else{
                     Swal.fire(
                         {
