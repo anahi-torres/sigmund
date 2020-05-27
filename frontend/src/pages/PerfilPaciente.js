@@ -8,13 +8,13 @@ export default (props) =>{
         <>
             <div className="perfil-paciente">
 
-                <h1>Perfil del paciente</h1>
+                <h1 className="ml-5">Perfil del paciente</h1>
+
+                <Calendario type='paciente' user={props.user}/>
 
                 <ListadoConsultas type="misconsultas"
                                   user={ props.user }
                 />
-
-                <Calendario type='paciente' user={props.user}/>
                 
             </div>
         </>

@@ -132,6 +132,8 @@ export default (props) =>{
                         >
                             <option>-Seleccione-</option>
                             <option value="1">Martin</option>
+                            <option value="2">Leandro</option>
+
                         </Form.Control>
 
                     </Form.Group>

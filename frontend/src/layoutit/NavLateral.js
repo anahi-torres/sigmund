@@ -61,7 +61,9 @@ export default (props) =>{
                                     <li>Nuestro psicólogos</li>
                                 </a>
                                 
-                                <li>Contacto</li>
+                                <Link to="/contacto">
+                                    <li>Contacto</li>
+                                </Link>
                             </ul>
                         </nav>
                         </div>

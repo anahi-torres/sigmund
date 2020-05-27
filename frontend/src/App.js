@@ -21,6 +21,7 @@ import Planes from './componetes/Planes';
 import NuestrosPsicologos from './componetes/NuestrosPsicologos';
 import RegistroModal from './componetes/RegistroModal';
 import DetallePsicologos from './pages/DetallePsicologos';
+import Contacto from './pages/Contacto';
 
 function App() {
 
@@ -70,7 +71,7 @@ function App() {
 
             <Route path="/nuestrospsicologos" component={DetallePsicologos} />
 
-            <Route path="/psicologo" children={<PerfilPsicologo user={usuario} />} />
+            <Route path="/contacto" component={Contacto} />
 
             <Route exact path="/" 
                 children={
@@ -95,6 +96,8 @@ function App() {
                 <Route path="/consultas"component={ListadoConsultas} />
 
                 <Route path="/administracion"component={Administracion} />
+
+                <Route path="/psicologo" children={<PerfilPsicologo user={usuario} />} />
               </>
 
             }

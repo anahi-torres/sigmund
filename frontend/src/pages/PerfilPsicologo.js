@@ -11,17 +11,17 @@ export default (props) =>{
 
     return(
         <>
-            <div className="perfil-psicologo">
+            <div className="perfil-psicologo ml-5">
 
-                <h1>Psicólogos</h1>
-
-                <Link to="/consultas">
-                    <Button className="m-1" variant="info">Ver consultas</Button>
-                </Link>
-                
+                <h1>Perfil psicólogo</h1>
+  
             </div>
 
             <Calendario type='psicologo' user={props.user}/>
+
+            <Link to="/consultas">
+                    <Button className="m-1" variant="info">Ver consultas</Button>
+            </Link>
 
         </>
     )
